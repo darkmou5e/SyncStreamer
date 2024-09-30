@@ -31,11 +31,11 @@ export class TimeframePlayer {
 
     async start() {
         await this._loadInitialTimeframe()
-        requestAnimationFrame(runLoopFunction)
+        requestAnimationFrame(this._runLoopFunction)
     }
 
     getFrameProgress() {
-        return (this._playbackTime() - currentTimeframe.startAt) / timeframeDuration * 100
+        return (this._playbackTime() - this._currentTimeframe.startAt) / this._timeframeDuration * 100
     }
 
 
@@ -50,7 +50,7 @@ export class TimeframePlayer {
 
 
 
-    async _getTimeframeworker() {
+    async _getTimeframe(timeframeId) {
         this._isTimeframeLoading = true
         const msgId = createMessageId()
         this._worker.postMessage([msgId, "getTimeframe", timeframeId])
@@ -111,7 +111,6 @@ export class TimeframePlayer {
     }
 
 
-    // pure
     _getNextTimeframeInfo(time, timeframeIndex) {
         const next = timeframeIndex.find(tf => (time >= tf.startAt) && (time <= tf.endAt))
         if (next) {
@@ -122,9 +121,8 @@ export class TimeframePlayer {
         }
     }
 
-    // pure
     _isItTimeToLoadNextTimeframe(currentTime, currentTimeframe) {
-        return currentTime > (currentTimeframe.startAt + timeframeDuration / 3)
+        return currentTime > (currentTimeframe.startAt + this._timeframeDuration / 3)
     }
 
     async _loadNext() {
@@ -138,7 +136,7 @@ export class TimeframePlayer {
     }
 
 
-    async loadInitialTimeframe() {
+    async _loadInitialTimeframe() {
         const freshIndex = await this._getIndex()
         const nextTimeframeInfo = freshIndex[2]
         const nextTimeframeData = await this._getTimeframe(nextTimeframeInfo.id)
