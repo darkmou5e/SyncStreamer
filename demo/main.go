@@ -11,7 +11,7 @@ import (
 )
 
 func led() {
-	matrix, width := textToLedMatrix("Привет! Это стрим с серера в реальном времени! ")
+	matrix, width := textToLedMatrix("ЭТОТ СТРИМ В РЕАЛЬНОМ ВРЕМЕНИ ДОЛЖЕН ОТОБРАЖАТЬСЯ СИНХРОННО НА РАЗНЫХ УСТРОЙСТВАХ!   ")
 	destWidth := 47
 	pos := 0
 	for {
