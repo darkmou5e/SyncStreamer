@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>LedDisplay test</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+
+        <style>
+         html, body{
+             margin: 0;
+             padding: 0;
+             background-color: #240000;
+         }
+
+         #rootEl {
+             height: 200px;
+             width: 200px;
+         }
+
+
+        .fade-in {
+            animation: fade-in 0.5s;
+        }
+
+         .fade-out {
+             animation: fade-out 1s;
+         }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+         @keyframes fade-out {
+             0% {
+                 opacity: 1;
+             }
+             100% {
+                 opacity: 0;
+             }
+         }
+
+
+        </style>
+        <script type="module" src="./ledDisplayTest.mjs" defer></script>
+    </head>
+    <body>
+        <div id="rootEl"></div>
+    </body>
+</html>

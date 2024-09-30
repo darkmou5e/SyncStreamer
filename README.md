@@ -136,4 +136,5 @@ Before submitting, make sure your code follows the existing style and passes all
 
 ## License
 
-SyncStreamer is licensed under the GNU GPL 2 License. See the [LICENSE](LICENSE) file for more information.
+Golang SyncStreamer code is licensed under the GNU GPL 2 License. See the [LICENSE](LICENSE) file for more information.
+JavaScript client code in ./client dir is under MIT License.
