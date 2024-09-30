@@ -48,7 +48,7 @@ func inServer(proc *processor.Processor) {
 func outServer(proc *processor.Processor) {
 	muxIn := http.NewServeMux()
 
-	// muxIn.Handle("/", http.FileServer(http.Dir("./client")))
+	muxIn.Handle("/", http.FileServer(http.Dir("./client")))
 
 	muxIn.HandleFunc("/frame", func(resp http.ResponseWriter, req *http.Request) {
 		if req.Method != http.MethodGet {
