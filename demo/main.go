@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"net/http"
 	"strings"
@@ -10,8 +11,11 @@ import (
 	"time"
 )
 
+var textToDisplay string
+var adr string
+
 func led() {
-	matrix, width := textToLedMatrix("ЭТОТ СТРИМ В РЕАЛЬНОМ ВРЕМЕНИ ДОЛЖЕН ОТОБРАЖАТЬСЯ СИНХРОННО НА РАЗНЫХ УСТРОЙСТВАХ!   ")
+	matrix, width := textToLedMatrix(textToDisplay)
 	destWidth := 47
 	pos := 0
 	for {
@@ -27,8 +31,7 @@ func led() {
 			fmt.Errorf("%v", err)
 		}
 
-		// body := fmt.Sprintf("{\"timestamp\":%d}", currentTime)
-		http.Post("http://127.0.0.1:4242/event/led", "application/json", bytes.NewReader(buf))
+		http.Post(adr+"/event/led", "application/json", bytes.NewReader(buf))
 		time.Sleep(time.Duration(50) * time.Millisecond)
 	}
 }
@@ -38,7 +41,7 @@ func streamtime() {
 		currentTime := time.Now().UnixMilli()
 		time.Sleep(time.Duration(16) * time.Millisecond)
 		body := fmt.Sprintf("{\"time\":%d}", currentTime)
-		http.Post("http://127.0.0.1:4242/event/streamtime", "application/json", strings.NewReader(body))
+		http.Post(adr+"/event/streamtime", "application/json", strings.NewReader(body))
 	}
 }
 
@@ -104,6 +107,16 @@ func repeatMatrix(srcMatrix []int, srcWidth, srcOffset, destWidth int) []int {
 }
 
 func main() {
+	flag.StringVar(&textToDisplay, "text", "", "text to display")
+	flag.StringVar(&adr, "address", "", "SyncStreamer inbound address http[s]://[host]:[port]")
+	flag.Parse()
+	textToDisplay = strings.ToUpper(textToDisplay)
+
+	if textToDisplay == "" || adr == "" {
+		flag.PrintDefaults()
+		return
+	}
+
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	go led()
