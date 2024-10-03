@@ -117,12 +117,6 @@ To build and run the SyncStreamer server locally:
    ./syncstreamer
    ```
 
-4. The server will start and listen for HTTP requests on the configured port (default: `8080`).
-
-### Environment Variables (not yet)
-
-- `PORT`: Define the port on which the server should listen (default is `8080`).
-
 ## Contributing
 
 Contributions are welcome! Please submit a pull request or open an issue if you encounter any bugs or have suggestions for improvements.
