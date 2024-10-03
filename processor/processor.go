@@ -2,6 +2,7 @@ package processor
 
 import (
 	"container/list"
+	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -55,7 +56,7 @@ func startNewEventframe() *eventframe.EventFrame {
 	return eventframe.StartEventFrame(timestamp.Duration(params.TimeframeDuration))
 }
 
-func StartNewProcessor() *Processor {
+func StartNewProcessor(ctx context.Context) *Processor {
 	proc := Processor{
 		timeframes:        list.New(),
 		eventIn:           make(chan *eventframe.Event),
@@ -114,7 +115,8 @@ func StartNewProcessor() *Processor {
 						completeCurrentEventFrame()
 					}
 				}
-				// TODO: add context done cancelation
+			case <-ctx.Done():
+				return
 			}
 		}
 	}()

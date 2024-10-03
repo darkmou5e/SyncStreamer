@@ -46,6 +46,6 @@ func ReadParams() {
 	}
 
 	if TimeframeHistoryItems == 0 {
-		TimeframeDuration = defaultTimeframeHistoryItems
+		TimeframeHistoryItems = defaultTimeframeHistoryItems
 	}
 }
