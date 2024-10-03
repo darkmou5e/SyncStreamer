@@ -80,7 +80,7 @@ func inServer(proc *processor.Processor) {
 	})
 
 	serverIn := http.Server{
-		Addr:    ":4242",
+		Addr:    inAddr,
 		Handler: muxIn,
 	}
 
@@ -90,7 +90,9 @@ func inServer(proc *processor.Processor) {
 func outServer(proc *processor.Processor) {
 	muxIn := http.NewServeMux()
 
-	muxIn.Handle("/", http.FileServer(http.Dir("./client")))
+	if serveStatic {
+		muxIn.Handle("/", http.FileServer(http.Dir("./client")))
+	}
 
 	muxIn.HandleFunc("/frame", func(resp http.ResponseWriter, req *http.Request) {
 		if req.Method != http.MethodGet {
@@ -156,7 +158,7 @@ func outServer(proc *processor.Processor) {
 	})
 
 	serverIn := http.Server{
-		Addr:    ":8080",
+		Addr:    outAddr,
 		Handler: muxIn,
 	}
 
