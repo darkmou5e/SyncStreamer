@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/syncstreamer/server/params"
 	"github.com/syncstreamer/server/timeframe"
 	"github.com/syncstreamer/server/timeframe/eventframe"
 	"github.com/syncstreamer/server/timestamp"
@@ -51,7 +52,7 @@ func (r Processor) GetTimeframes() []*TimeframeItem {
 }
 
 func startNewEventframe() *eventframe.EventFrame {
-	return eventframe.StartEventFrame(10_000)
+	return eventframe.StartEventFrame(timestamp.Duration(params.TimeframeDuration))
 }
 
 func StartNewProcessor() *Processor {
@@ -63,8 +64,7 @@ func StartNewProcessor() *Processor {
 	}
 
 	completeCurrentEventFrame := func() {
-		// TODO: use length from config
-		if proc.timeframes.Len() == 5 {
+		if proc.timeframes.Len() == params.TimeframeHistoryItems {
 			proc.timeframes.Remove(proc.timeframes.Back())
 		}
 

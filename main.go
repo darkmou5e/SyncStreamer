@@ -2,62 +2,18 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"net/http"
-	"os"
 	"slices"
 	"strconv"
 	"sync"
 
+	"github.com/syncstreamer/server/params"
 	"github.com/syncstreamer/server/processor"
 	"github.com/syncstreamer/server/timeframe/eventframe"
 	"github.com/syncstreamer/server/timestamp"
 	"github.com/syncstreamer/server/types"
 )
-
-var inAddr string
-var outAddr string
-var serveStatic bool
-var timeframeDuration int
-var timeframeHistoryItems int
-
-func readParams() {
-	const (
-		defaultTimeframeDuration     = 10_000
-		defaultTimeframeHistoryItems = 5
-	)
-	inAddrEnv, _ := os.LookupEnv("SYNCSTREAMER_IN_ADDRESS")
-	flag.StringVar(&inAddr, "in_addr", inAddrEnv, "Inbound address \"[host]:[port]\"")
-	outAddrEnv, _ := os.LookupEnv("SYNCSTREAMER_OUT_ADDRESS")
-	flag.StringVar(&outAddr, "out_addr", outAddrEnv, "Outbound address \"[host]:[port]\"")
-	serveStaticEnv, _ := os.LookupEnv("SYNCSTREAMER_SERVE_STATIC")
-	serveStaticEnvBool := serveStaticEnv == "true"
-	flag.BoolVar(&serveStatic, "serve_static", serveStaticEnvBool,
-		"set to true if the server should serve client static too, default: false")
-	timeframeDurationEnv, _ := os.LookupEnv("SYNCSTREAME_TIMEFRAME_DURATION")
-	timeframeDurationEnvInt, _ := strconv.ParseInt(timeframeDurationEnv, 10, 64)
-	flag.IntVar(&timeframeDuration, "timeframe_duration", int(timeframeDurationEnvInt),
-		fmt.Sprintf("timeframe duration in ms, default: %d", defaultTimeframeDuration))
-	timeframeHistoryItemsEnv, _ := os.LookupEnv("SYNCSTREAM_TIMEFRAME_HISTORY_ITEMS")
-	timeframeHistoryItemsEnvInt, _ := strconv.ParseInt(timeframeHistoryItemsEnv, 10, 64)
-	flag.IntVar(&timeframeHistoryItems, "timeframe_history_items", int(timeframeHistoryItemsEnvInt),
-		fmt.Sprintf("timeframe history items number, default: %d", defaultTimeframeHistoryItems))
-	flag.Parse()
-
-	if inAddr == "" || outAddr == "" {
-		flag.PrintDefaults()
-		os.Exit(1)
-	}
-
-	if timeframeDuration == 0 {
-		timeframeDuration = defaultTimeframeDuration
-	}
-
-	if timeframeHistoryItems == 0 {
-		timeframeDuration = defaultTimeframeHistoryItems
-	}
-}
 
 func inServer(proc *processor.Processor) {
 	muxIn := http.NewServeMux()
@@ -83,7 +39,7 @@ func inServer(proc *processor.Processor) {
 	})
 
 	serverIn := http.Server{
-		Addr:    inAddr,
+		Addr:    params.InAddr,
 		Handler: muxIn,
 	}
 
@@ -93,7 +49,7 @@ func inServer(proc *processor.Processor) {
 func outServer(proc *processor.Processor) {
 	muxIn := http.NewServeMux()
 
-	if serveStatic {
+	if params.ServeStatic {
 		muxIn.Handle("/", http.FileServer(http.Dir("./static")))
 	}
 
@@ -161,7 +117,7 @@ func outServer(proc *processor.Processor) {
 	})
 
 	serverIn := http.Server{
-		Addr:    outAddr,
+		Addr:    params.OutAddr,
 		Handler: muxIn,
 	}
 
@@ -169,7 +125,7 @@ func outServer(proc *processor.Processor) {
 }
 
 func main() {
-	readParams()
+	params.ReadParams()
 
 	wg := sync.WaitGroup{}
 	proc := processor.StartNewProcessor()
