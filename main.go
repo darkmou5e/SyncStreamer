@@ -33,13 +33,16 @@ func readParams() {
 	flag.StringVar(&outAddr, "out_addr", outAddrEnv, "Outbound address \"[host]:[port]\"")
 	serveStaticEnv, _ := os.LookupEnv("SYNCSTREAMER_SERVE_STATIC")
 	serveStaticEnvBool := serveStaticEnv == "true"
-	flag.BoolVar(&serveStatic, "serve_static", serveStaticEnvBool, "set to true if the server should serve client static too, default: false")
+	flag.BoolVar(&serveStatic, "serve_static", serveStaticEnvBool,
+		"set to true if the server should serve client static too, default: false")
 	timeframeDurationEnv, _ := os.LookupEnv("SYNCSTREAME_TIMEFRAME_DURATION")
 	timeframeDurationEnvInt, _ := strconv.ParseInt(timeframeDurationEnv, 10, 64)
-	flag.IntVar(&timeframeDuration, "timeframe_duration", int(timeframeDurationEnvInt), fmt.Sprintf("timeframe duration in ms, default: %d", defaultTimeframeDuration))
+	flag.IntVar(&timeframeDuration, "timeframe_duration", int(timeframeDurationEnvInt),
+		fmt.Sprintf("timeframe duration in ms, default: %d", defaultTimeframeDuration))
 	timeframeHistoryItemsEnv, _ := os.LookupEnv("SYNCSTREAM_TIMEFRAME_HISTORY_ITEMS")
 	timeframeHistoryItemsEnvInt, _ := strconv.ParseInt(timeframeHistoryItemsEnv, 10, 64)
-	flag.IntVar(&timeframeHistoryItems, "timeframe_history_items", int(timeframeHistoryItemsEnvInt), fmt.Sprintf("timeframe history items number, default: %d", defaultTimeframeHistoryItems))
+	flag.IntVar(&timeframeHistoryItems, "timeframe_history_items", int(timeframeHistoryItemsEnvInt),
+		fmt.Sprintf("timeframe history items number, default: %d", defaultTimeframeHistoryItems))
 	flag.Parse()
 
 	if inAddr == "" || outAddr == "" {
