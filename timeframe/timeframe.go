@@ -3,10 +3,10 @@ package timeframe
 import (
 	"fmt"
 
-	"github.com/darkmou5e/syncstreamer/timeframe/dataitem"
-	"github.com/darkmou5e/syncstreamer/timeframe/eventframe"
-	"github.com/darkmou5e/syncstreamer/timeframe/header"
-	"github.com/darkmou5e/syncstreamer/timeframe/metadata"
+	"github.com/syncstreamer/server/timeframe/dataitem"
+	"github.com/syncstreamer/server/timeframe/eventframe"
+	"github.com/syncstreamer/server/timeframe/header"
+	"github.com/syncstreamer/server/timeframe/metadata"
 )
 
 func Encode(eventFrame *eventframe.EventFrame) ([]byte, error) {

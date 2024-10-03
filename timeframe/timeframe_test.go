@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/darkmou5e/syncstreamer/timeframe/eventframe"
+	"github.com/syncstreamer/server/timeframe/eventframe"
 )
 
 func TestTimeFrame(t *testing.T) {

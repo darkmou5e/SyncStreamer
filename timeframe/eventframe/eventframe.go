@@ -3,9 +3,9 @@ package eventframe
 import (
 	"errors"
 
-	"github.com/darkmou5e/syncstreamer/timeframe/dataitem"
-	"github.com/darkmou5e/syncstreamer/timestamp"
-	"github.com/darkmou5e/syncstreamer/types"
+	"github.com/syncstreamer/server/timeframe/dataitem"
+	"github.com/syncstreamer/server/timestamp"
+	"github.com/syncstreamer/server/types"
 )
 
 type Channel struct {

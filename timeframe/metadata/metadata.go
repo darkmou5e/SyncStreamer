@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/darkmou5e/syncstreamer/types"
+	"github.com/syncstreamer/server/types"
 )
 
 type MetadataRecord struct {

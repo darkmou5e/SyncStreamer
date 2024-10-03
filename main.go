@@ -10,10 +10,10 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/darkmou5e/syncstreamer/processor"
-	"github.com/darkmou5e/syncstreamer/timeframe/eventframe"
-	"github.com/darkmou5e/syncstreamer/timestamp"
-	"github.com/darkmou5e/syncstreamer/types"
+	"github.com/syncstreamer/server/processor"
+	"github.com/syncstreamer/server/timeframe/eventframe"
+	"github.com/syncstreamer/server/timestamp"
+	"github.com/syncstreamer/server/types"
 )
 
 var inAddr string

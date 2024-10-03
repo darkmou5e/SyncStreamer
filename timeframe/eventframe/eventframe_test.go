@@ -3,7 +3,7 @@ package eventframe
 import (
 	"testing"
 
-	"github.com/darkmou5e/syncstreamer/timestamp"
+	"github.com/syncstreamer/server/timestamp"
 )
 
 func TestEventFrame(t *testing.T) {

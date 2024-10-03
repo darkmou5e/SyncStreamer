@@ -103,7 +103,7 @@ To build and run the SyncStreamer server locally:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/darkmou5e/syncstreamer.git
+   git clone https://github.com/syncstreamer/server.git
    cd syncstreamer
    ```
 

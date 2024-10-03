@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/darkmou5e/syncstreamer/timeframe"
-	"github.com/darkmou5e/syncstreamer/timeframe/eventframe"
-	"github.com/darkmou5e/syncstreamer/timestamp"
+	"github.com/syncstreamer/server/timeframe"
+	"github.com/syncstreamer/server/timeframe/eventframe"
+	"github.com/syncstreamer/server/timestamp"
 )
 
 type TimeframeItem struct {
