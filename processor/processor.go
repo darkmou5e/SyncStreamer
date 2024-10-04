@@ -4,7 +4,7 @@ import (
 	"container/list"
 	"context"
 	"errors"
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/syncstreamer/server/params"
@@ -53,6 +53,7 @@ func (r Processor) GetTimeframes() []*TimeframeItem {
 }
 
 func startNewEventframe() *eventframe.EventFrame {
+	log.Println("Start new timeframe")
 	return eventframe.StartEventFrame(timestamp.Duration(params.TimeframeDuration))
 }
 
@@ -71,7 +72,7 @@ func StartNewProcessor(ctx context.Context) *Processor {
 
 		tf, err := convertToTimeframeItem(proc.currentEventframe)
 		if err != nil {
-			panic("Unknown error")
+			log.Panicf("%v", err)
 		}
 
 		proc.timeframes.PushFront(tf)
@@ -91,7 +92,7 @@ func StartNewProcessor(ctx context.Context) *Processor {
 							completeCurrentEventFrame()
 							goto retry
 						} else {
-							panic(fmt.Errorf("Error %v, the event %v", err, ev))
+							log.Panicf("Error %v, the event %v", err, ev)
 						}
 					}
 				}

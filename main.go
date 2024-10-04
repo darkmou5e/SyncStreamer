@@ -154,11 +154,11 @@ func main() {
 	log.Println("Shutting down outbound HTTP endpoints")
 	err := outServer.Shutdown(context.Background())
 	if err != nil {
-		log.Fatal("v%", err)
+		log.Fatalf("%v", err)
 	}
 	log.Println("Shutting down inbound HTTP endpoints")
 	err = inServer.Shutdown(context.Background())
 	if err != nil {
-		log.Fatal("v%", err)
+		log.Fatalf("%v", err)
 	}
 }
