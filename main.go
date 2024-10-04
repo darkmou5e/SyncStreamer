@@ -21,15 +21,24 @@ func startInServer(proc *processor.Processor) *http.Server {
 	muxIn := http.NewServeMux()
 
 	muxIn.HandleFunc("/event/{channel}", func(resp http.ResponseWriter, req *http.Request) {
-		// if req.Method == http.MethodPost {
-		// }
+		if req.Method != http.MethodPost {
+			log.Printf("Wrong method %v for /event/{channel} endpoint", req.Method)
+			resp.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		channelId := req.PathValue("channel")
+		if channelId == "" {
+			log.Println("Input event channel name is empty")
+			resp.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		buf := make([]byte, req.ContentLength)
 		req.Body.Read(buf)
 		req.Body.Close()
 
 		contentType := req.Header.Get("Content-Type")
-		channelId := req.PathValue("channel")
 
 		proc.AddEvent(&eventframe.Event{
 			ChannelId: types.Id(channelId),
