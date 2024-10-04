@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os/signal"
@@ -59,11 +58,9 @@ func startOutServer(proc *processor.Processor) *http.Server {
 
 	muxIn.HandleFunc("/frame", func(resp http.ResponseWriter, req *http.Request) {
 		if req.Method != http.MethodGet {
-			fmt.Println("!!!")
-			resp.WriteHeader(http.StatusNotFound)
+			log.Printf("Wrong method %v for /frame endpoint", req.Method)
+			resp.WriteHeader(http.StatusBadRequest)
 			return
-		} else {
-			fmt.Println("OK!")
 		}
 
 		type ResponseItem struct {
@@ -85,7 +82,7 @@ func startOutServer(proc *processor.Processor) *http.Server {
 
 		b, err := json.Marshal(its)
 		if err != nil {
-			panic("out server panic")
+			log.Fatalf("Marshaling JSON error: %v", err)
 		}
 
 		resp.Header().Add("Content-Type", "application/json")
