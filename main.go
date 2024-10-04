@@ -125,7 +125,12 @@ func startOutServer(proc *processor.Processor) *http.Server {
 		Handler: muxIn,
 	}
 
-	go serverIn.ListenAndServe()
+	if params.UseTLS {
+		go serverIn.ListenAndServeTLS(params.CertPath, params.CertPrivateKeyPath)
+	} else {
+		go serverIn.ListenAndServe()
+	}
+
 	return &serverIn
 }
 
