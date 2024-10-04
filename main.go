@@ -84,7 +84,6 @@ func startOutServer(proc *processor.Processor) *http.Server {
 		}
 
 		b, err := json.Marshal(its)
-
 		if err != nil {
 			panic("out server panic")
 		}
@@ -94,24 +93,22 @@ func startOutServer(proc *processor.Processor) *http.Server {
 	})
 
 	muxIn.HandleFunc("/frame/{frameId}", func(resp http.ResponseWriter, req *http.Request) {
-		// if req.Method == http.MethodGet {
-		// 	fmt.Println("!!!")
-		// }
-
-		frameId, err := strconv.ParseInt(req.PathValue("frameId"), 0, 0)
-		fmt.Println(frameId)
-		if err != nil {
-			panic("frameId isn't int")
+		frameIdRaw := req.PathValue("frameId")
+		frameId, err := strconv.ParseInt(frameIdRaw, 0, 0)
+		if req.Method != http.MethodGet || err != nil {
+			log.Printf("Wrong method %v for /frame %v endpoint, error: %v", req.Method, frameIdRaw, err)
+			resp.WriteHeader(http.StatusBadRequest)
+			return
 		}
 
 		frames := proc.GetTimeframes()
-
 		i := slices.IndexFunc(frames, func(frm *processor.TimeframeItem) bool {
 			return frm.StartAt == timestamp.Timestamp(frameId)
 		})
 
 		if i < 0 {
 			resp.WriteHeader(http.StatusNotFound)
+			return
 		} else {
 			resp.Header().Add("Content-Type", "application/octet-stream")
 			resp.WriteHeader(http.StatusOK)
