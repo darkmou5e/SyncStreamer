@@ -138,12 +138,12 @@ export class TimeframePlayer {
 
     async _loadInitialTimeframe() {
         const freshIndex = await this._getIndex()
-        const nextTimeframeInfo = freshIndex[2]
+        const nextTimeframeInfo = freshIndex[1]
         const nextTimeframeData = await this._getTimeframe(nextTimeframeInfo.id)
         this._currentTimeframe = nextTimeframeInfo
         this._currentTimeframe.data = nextTimeframeData
         this._timeframeDuration = (nextTimeframeInfo.endAt - nextTimeframeInfo.startAt)
-        this._playbackDelay = this._timeframeDuration * 3 // 3 frames delay
+        this._playbackDelay = this._timeframeDuration * 2 // 2 frames delay
     }
 
 
