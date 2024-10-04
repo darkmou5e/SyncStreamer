@@ -62,7 +62,9 @@ func startOutServer(proc *processor.Processor) *http.Server {
 	muxIn := http.NewServeMux()
 
 	if params.ServeStatic {
-		muxIn.Handle("/", http.FileServer(http.Dir("./static")))
+		const staticDir = "./static"
+		log.Printf("Serving static from %s", staticDir)
+		muxIn.Handle("/", http.FileServer(http.Dir(staticDir)))
 	}
 
 	muxIn.HandleFunc("/frame", func(resp http.ResponseWriter, req *http.Request) {
