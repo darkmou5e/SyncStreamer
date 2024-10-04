@@ -21,8 +21,8 @@ const size = 10 // px
 // background-color: #240000;
 const colors = {
     0: '#FFFFFF', // white
-    1: '#2BF0FB', // red
-    2: '#00f0ff', // blue
+    1: '#32d6bf', // teal
+    2: '#aa88ff', // purple
     3: '#65BA00', // green
 }
 

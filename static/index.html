@@ -9,10 +9,10 @@
 
     <style>
      :root {
-        --color-red: #D00000;
-        --color-white: #ffffff;
-        --color-blue: #00f0ff;
-        --color-bg-red: #240000;
+         --color-teal:  #32d6bf;
+         --color-white: #ffffff;
+         --color-purple: #aa88ff;
+         --color-bg: #202429;
      }
 
         html, body {
@@ -22,8 +22,7 @@
             height: 100%;
             min-width: 100%;
             min-height: 100%;
-            /* background-color: var(--color-bg-red); */
-            background: linear-gradient(#240000, #120000);
+            background-color: var(--color-bg);
             color: var(--color-white);
             font-family: monospace;
         }
@@ -73,7 +72,7 @@
 
      #frameProgressBar {
          width: 90%;
-         background-color: var(--color-red);
+         background-color: var(--color-purple);
      }
 
      .timingsContainer {
@@ -106,14 +105,17 @@
      }
 
      a {
-         color: var(--color-red);
+         color: var(--color-white);
          text-decoration: none;
      }
 
      a:hover {
-         color: #F00;
+         filter: brightness(75%);
      }
 
+     .title {
+         color: var(--color-purple);
+     }
 
     </style>
 </head>
