@@ -139,6 +139,7 @@ func startOutServer(proc *processor.Processor) *http.Server {
 
 func main() {
 	params.ReadParams()
+
 	servingContext, cancelServingContext := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer cancelServingContext()
 	processorContext, cancelProcessorContext := context.WithCancel(context.Background())
@@ -150,12 +151,12 @@ func main() {
 	outServer := startOutServer(proc)
 
 	<-servingContext.Done()
-	log.Println("Shuttingdown outbound HTTP endpoints")
+	log.Println("Shutting down outbound HTTP endpoints")
 	err := outServer.Shutdown(context.Background())
 	if err != nil {
 		log.Fatal("v%", err)
 	}
-	log.Println("Shuttingdown inbound HTTP endpoints")
+	log.Println("Shutting down inbound HTTP endpoints")
 	err = inServer.Shutdown(context.Background())
 	if err != nil {
 		log.Fatal("v%", err)
